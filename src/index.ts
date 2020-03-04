@@ -65,7 +65,7 @@ const timeFmt = "YYYY-MM-DD HH:mm:ss";
   await browser.close();
 
   const json = JSON.stringify(multipleResults, null, 2);
-  const out = "export default " + json;
+  const out = "const data = " + json + ";\n\nmodule.exports = { data };";
   const fileName = "d" + time.local().format("YYYYMMDDHHmmss") + ".js";
   fs.writeFileSync(path.join(__dirname, "../data/notkept/", fileName), out);
   console.log(out);

@@ -4,7 +4,8 @@
   "description": "Profile some of the characteristics of my websites",
   "main": "./out/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --no-notify ./src/index.ts"
+    "dev": "ts-node-dev --respawn --no-notify ./src/index.ts",
+    "cat": "ts-node-dev --no-notify ./src/cat.ts"
   },
   "keywords": [],
   "author": "",
