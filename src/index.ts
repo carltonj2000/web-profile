@@ -45,22 +45,37 @@ const timeFmt = "YYYY-MM-DD HH:mm:ss";
 
   const results = multipleResults.results;
   const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setCacheEnabled(false);
-
   for (let j = 0; j < sites.length; j++) {
+    const page = await browser.newPage();
+    await page.setCacheEnabled(false);
     const transport = urlsConfigs[baseUrl].transport;
     const url = `${transport}://${sites[j]}.${baseUrl}`;
     console.log(url);
     const result = { url, time: [] };
     for (let i = 0; i < 10; i++) {
-      const start = moment();
-      await page.goto(url);
-      const end = moment();
-      const delta = end.diff(start);
-      result.time.push({ start: start.local().format(timeFmt), delta });
+      try {
+        const start = moment();
+        await Promise.all([
+          page.waitForNavigation({ timeout: 30000, waitUntil: "networkidle0" }),
+          page.goto(url)
+        ]);
+        const end = moment().subtract(500);
+        const delta = end.diff(start);
+        const content = await page.content();
+        result.time.push({
+          status: "ok",
+          start: start.local().format(timeFmt),
+          delta,
+          contentSize: content.length
+        });
+        console.log(delta);
+      } catch (e) {
+        console.log(e.message);
+        result.time.push({ status: "error", msg: e.message });
+      }
     }
     results.push(result);
+    page.close();
   }
   await browser.close();
 
