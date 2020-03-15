@@ -1,5 +1,7 @@
 import React from "react";
 
+import dataRaw from "./data";
+
 const sites = [
   "carltonathome",
   "carltonwin8",
@@ -27,14 +29,14 @@ const url = site => `${transport}://${sites}.${baseUrl}`;
 const bitly = {};
 sites.map(s => (bitly[url(s)] = s));
 
-const data = oldDoNginx.data.results.map(s => {
+const data = dataRaw.map(s => {
   return {
     name: bitly[s.url]
   };
 });
 
 function App() {
-  console.log(data);
+  console.log(dataRaw, data);
   return <div>hi</div>;
 }
 

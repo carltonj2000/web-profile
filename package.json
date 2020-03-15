@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --no-notify ./src/index.ts",
     "dev1": "ts-node-dev --no-notify ./src/index.ts",
-    "cat": "ts-node-dev --no-notify ./src/cat.ts"
+    "cat": "ts-node-dev --no-notify ./src/cat.ts",
+    "gen": "ts-node-dev --no-notify ./src/mkData.ts",
+    "gen:dev": "ts-node-dev --respawn --no-notify ./src/mkData.ts"
   },
   "keywords": [],
   "author": "",
